@@ -18,6 +18,8 @@
  */
 class jJsonRpc {
 
+    protected static $version = '2.0';
+    
     private function __construct(){}
 
     /**
@@ -38,7 +40,7 @@ class jJsonRpc {
      * @return string jsonrcp request content
      */
     public static function encodeRequest($methodname, $params, $id=1){
-        return '{"method":"'.$methodname.'","params":'.json_encode($params).',"id":'.json_encode($id).'}';
+        return '{"jsonrpc":"'.self::$version.'","method":"'.$methodname.'","params":'.json_encode($params).',"id":'.json_encode($id).'}';
     }
 
     /**
@@ -57,7 +59,7 @@ class jJsonRpc {
      * @return string encoded response
      */
     public static function encodeResponse($params, $id=1){
-        return '{"result":'.json_encode($params).',"error":null,"id":'.json_encode($id).'}';
+        return '{"jsonrpc":"'.self::$version.'","result":'.json_encode($params).',"id":'.json_encode($id).'}';
     }
 
     /**
@@ -67,7 +69,7 @@ class jJsonRpc {
      * @return string encoded response
      */
     public static function encodeFaultResponse($code, $message, $id=1){
-        return '{"result":null,"error":{"code": '.json_encode($code).', "string":'.json_encode($message).' },"id":'.json_encode($id).'}';
+        return '{"jsonrpc":"'.self::$version.'","error":{"code": '.json_encode($code).', "message":'.json_encode($message).' },"id":'.json_encode($id).'}';
     }
 }
 
